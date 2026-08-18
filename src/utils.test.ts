@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { getFormattedDate, joinPath } from './utils';
+import { getFormattedDate, joinPath, validateFolderStr } from './utils';
 
 test.for([
 	{ input: new Date(2026, 1, 2, 5, 2, 1), expected: '2026-02-02 05.02.01' },
@@ -20,7 +20,28 @@ test.for([
 	{ directory: '', filename: 'test.md', expected: 'test.md' },
 	{ directory: '/', filename: 'test.md', expected: '/test.md' },
 	{ directory: 'test', filename: 'test.md', expected: 'test/test.md' },
+	{ directory: 'test/', filename: 'test.md', expected: 'test/test.md' },
 	{ directory: '/test', filename: 'test.md', expected: '/test/test.md' },
-])('joinPath($input) -> $expected', ({ directory, filename, expected }) => {
-	expect(joinPath(directory, filename)).toBe(expected);
+	{ directory: '/test/', filename: 'test.md', expected: '/test/test.md' },
+	{ directory: '/a/b', filename: 'test.md', expected: '/a/b/test.md' },
+	{ directory: '/a/b/', filename: 'test.md', expected: '/a/b/test.md' },
+])(
+	'joinPath($directory, $filename) -> $expected',
+	({ directory, filename, expected }) => {
+		expect(joinPath(directory, filename)).toBe(expected);
+	},
+);
+
+test.for([
+	{ input: '', expected: undefined },
+	{ input: '/', expected: undefined },
+	{ input: 'a', expected: undefined },
+	{ input: 'a/', expected: 'Folder cannot end with "/"' },
+	{ input: '/a', expected: 'Folder cannot start with "/"' },
+	{ input: '/a/', expected: 'Folder cannot start with "/"' },
+	{ input: 'a/b', expected: undefined },
+	{ input: 'a//b', expected: 'Folder part cannot be empty' },
+	{ input: '/a//b', expected: 'Folder cannot start with "/"' },
+])('validateFolderStr($input) -> $expected', ({ input, expected }) => {
+	expect(validateFolderStr(input)).toBe(expected);
 });

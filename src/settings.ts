@@ -1,5 +1,6 @@
-import { App, PluginSettingTab, Setting } from 'obsidian';
+import { App, PluginSettingTab } from 'obsidian';
 import FileTimestampPlugin from './main';
+import { validateFolderStr } from './utils';
 
 export interface FileTimestampSettings {
 	directory: string;
@@ -27,6 +28,7 @@ export class FileTimestampSettingTab extends PluginSettingTab {
 					key: 'directory',
 					includeRoot: true,
 					placeholder: '/',
+					validate: (value: string) => validateFolderStr(value),
 				},
 			},
 		];

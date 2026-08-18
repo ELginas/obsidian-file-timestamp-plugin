@@ -1,10 +1,15 @@
-import { Plugin } from 'obsidian';
+import { Notice, Plugin } from 'obsidian';
 import {
 	DEFAULT_SETTINGS,
 	FileTimestampSettings,
 	FileTimestampSettingTab,
 } from './settings';
-import { getFormattedDate, joinPath } from './utils';
+import {
+	getFormattedDate,
+	joinPath,
+	validatedFolder,
+	validateFolderException,
+} from './utils';
 
 export default class FileTimestampPlugin extends Plugin {
 	settings!: FileTimestampSettings;
@@ -15,13 +20,13 @@ export default class FileTimestampPlugin extends Plugin {
 		this.addCommand({
 			id: 'create-file-timestamp',
 			name: 'Create new file with timestamp',
-			callback: async () => this.createNewFileTimestamp(),
+			callback: async () => this.actionCreateNewFileTimestamp(),
 		});
 
 		this.addRibbonIcon(
 			'dice',
 			'Create new file with timestamp',
-			async (_evt: MouseEvent) => this.createNewFileTimestamp(),
+			async (_evt: MouseEvent) => this.actionCreateNewFileTimestamp(),
 		);
 
 		this.addSettingTab(new FileTimestampSettingTab(this.app, this));
@@ -29,11 +34,26 @@ export default class FileTimestampPlugin extends Plugin {
 
 	onunload() {}
 
+	async actionCreateNewFileTimestamp() {
+		try {
+			await this.createNewFileTimestamp();
+		} catch (error) {
+			console.error(error);
+			new Notice(error);
+		}
+	}
+
 	async createNewFileTimestamp() {
 		const date = new Date();
 		const formattedDate = getFormattedDate(date);
 		const filename = `${formattedDate}.md`;
-		const filepath = joinPath(this.settings.directory, filename);
+
+		let directory = validatedFolder(this.settings.directory);
+		if (!this.app.vault.getFolderByPath(directory)) {
+			await this.app.vault.createFolder(directory);
+		}
+
+		const filepath = joinPath(directory, filename);
 		const file = await this.app.vault.create(filepath, '');
 
 		const leaf = this.app.workspace.getLeaf();
