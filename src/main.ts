@@ -4,12 +4,7 @@ import {
 	FileTimestampSettings,
 	FileTimestampSettingTab,
 } from './settings';
-import {
-	getFormattedDate,
-	joinPath,
-	validatedFolder,
-	validateFolderException,
-} from './utils';
+import { getFormattedDate, joinPath, validatedFolder } from './utils';
 
 export default class FileTimestampPlugin extends Plugin {
 	settings!: FileTimestampSettings;
