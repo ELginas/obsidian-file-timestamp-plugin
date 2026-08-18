@@ -1,9 +1,9 @@
 {
 	"id": "file-timestamp",
-	"name": "File Timestamp Plugin",
+	"name": "File Timestamp",
 	"version": "0.1.1",
 	"minAppVersion": "1.13.0",
-	"description": "Create files with timestamps",
+	"description": "Create new files with detailed current date timestamp",
 	"author": "ELginas",
 	"isDesktopOnly": false
 }
