@@ -15,9 +15,11 @@ export function getFormattedDate(date: Date): string {
 }
 
 export function joinPath(directory: string, filename: string): string {
-	let dir = directory;
 	if (directory === '') {
-		dir = '/';
+		return filename;
 	}
-	return `${dir}/${filename}`;
+	if (directory === '/') {
+		return `/${filename}`;
+	}
+	return `${directory}/${filename}`;
 }
