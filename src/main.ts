@@ -19,7 +19,7 @@ export default class FileTimestampPlugin extends Plugin {
 		});
 
 		this.addRibbonIcon(
-			'dice',
+			'file-plus-corner',
 			'Create new file with timestamp',
 			async (_evt: MouseEvent) => this.actionCreateNewFileTimestamp(),
 		);
