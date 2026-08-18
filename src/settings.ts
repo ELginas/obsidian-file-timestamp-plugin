@@ -1,4 +1,4 @@
-import { App, PluginSettingTab } from 'obsidian';
+import { App, PluginSettingTab, SettingDefinitionItem } from 'obsidian';
 import FileTimestampPlugin from './main';
 import { validateFolderStr } from './utils';
 
@@ -18,7 +18,7 @@ export class FileTimestampSettingTab extends PluginSettingTab {
 		this.plugin = plugin;
 	}
 
-	getSettingDefinitions() {
+	getSettingDefinitions(): SettingDefinitionItem<string>[] {
 		return [
 			{
 				name: 'Directory',

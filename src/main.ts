@@ -34,7 +34,11 @@ export default class FileTimestampPlugin extends Plugin {
 			await this.createNewFileTimestamp();
 		} catch (error) {
 			console.error(error);
-			new Notice(error);
+			const message =
+				error instanceof Error
+					? `${error.name}: ${error.message}`
+					: String(error);
+			new Notice(message);
 		}
 	}
 
