@@ -53,6 +53,9 @@ export default class FileTimestampPlugin extends Plugin {
 		}
 
 		const filepath = joinPath(directory, filename);
+		// Note: This function does not handle file collisions, as it is not expected for a file to be created a few times in one second.
+		// It is better to throw an error in this case than to have files ending with _1 or _2. If this becomes an issue, this functionality
+		// can be reworked.
 		const file = await this.app.vault.create(filepath, '');
 
 		const leaf = this.app.workspace.getLeaf();
