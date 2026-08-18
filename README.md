@@ -15,3 +15,7 @@ The command can be assigned to a shortcut for quicker file creation.
 Settings allows customizing the folder where new file with timestamp is created.
 
 ![](docs/image_2.png)
+
+# Installation
+
+![](docs/installation.png)
