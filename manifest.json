@@ -3,7 +3,7 @@
 	"name": "File Timestamp",
 	"version": "0.1.1",
 	"minAppVersion": "1.13.0",
-	"description": "Create new files with detailed current date timestamp",
+	"description": "Create new files with detailed current date timestamp.",
 	"author": "ELginas",
 	"isDesktopOnly": false
 }
